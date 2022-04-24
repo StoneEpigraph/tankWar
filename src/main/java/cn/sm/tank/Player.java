@@ -4,8 +4,6 @@ import cn.sm.tank.constant.Dir;
 import lombok.Data;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 /**
  * @ClassName Player
@@ -70,6 +68,8 @@ public class Player extends Frame {
         if (!isMoving) {
             return;
         }
+        // TODO 边界检测
+
         switch (dir) {
             case UP:
                 y -= SPEED;
