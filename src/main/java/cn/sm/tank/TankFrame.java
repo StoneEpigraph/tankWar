@@ -44,6 +44,86 @@ public class TankFrame extends Frame {
     public static void launch() {
     }
 
+    private class MyKeyListener extends KeyAdapter {
+
+        boolean bL = false;
+        boolean bR = false;
+        boolean bU = false;
+        boolean bD = false;
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
+                case KeyEvent.VK_LEFT:
+                    bL = true;
+                    setMainTankDir();
+                    player.setDir(Dir.LEFT);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = true;
+                    setMainTankDir();
+                    player.setDir(Dir.RIGHT);
+                    break;
+                case KeyEvent.VK_UP:
+                    bU = true;
+                    setMainTankDir();
+                    player.setDir(Dir.UP);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = true;
+                    setMainTankDir();
+                    player.setDir(Dir.DOWN);
+                    break;
+                case KeyEvent.VK_SPACE:
+                    player.fire();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
+                case KeyEvent.VK_LEFT:
+                    bL = false;
+                    setMainTankDir();
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = false;
+                    setMainTankDir();
+                    break;
+                case KeyEvent.VK_UP:
+                    bU = false;
+                    setMainTankDir();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = false;
+                    setMainTankDir();
+                    break;
+            }
+
+        }
+
+        private void setMainTankDir() {
+            if (!bL && !bR && !bU && !bD) {
+                player.setMoving(false);
+            } else {
+                if (bL) {
+                    player.setDir(Dir.LEFT);
+                } else if (bR) {
+                    player.setDir(Dir.RIGHT);
+                } else if (bU) {
+                    player.setDir(Dir.UP);
+                } else if (bD) {
+                    player.setDir(Dir.DOWN);
+                }
+                player.setMoving(true);
+            }
+
+
+        }
+    }
+
     public static void main(String[] args) {
         TankFrame tf = TankFrame.INSTANCE;
 
@@ -57,32 +137,5 @@ public class TankFrame extends Frame {
                 tf.repaint();
             }
         }).start();
-    }
-
-    private class MyKeyListener extends KeyAdapter {
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    player.setDir(Dir.LEFT);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    player.setDir(Dir.RIGHT);
-                    break;
-                case KeyEvent.VK_UP:
-                    player.setDir(Dir.UP);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    player.setDir(Dir.DOWN);
-                    break;
-            }
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            super.keyReleased(e);
-        }
     }
 }
