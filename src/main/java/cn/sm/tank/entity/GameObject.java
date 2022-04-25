@@ -3,7 +3,7 @@ package cn.sm.tank.entity;
 /**
  * @ClassName GameObject
  * @Description TODO
- * @Author StoneEpigraph
+ * @Author WhatsUpeng
  * @Date 4/25/22 12:36 PM
  * @Version 1.0
  **/

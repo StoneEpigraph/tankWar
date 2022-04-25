@@ -1,6 +1,7 @@
 package cn.sm.tank;
 
 import cn.sm.tank.constant.Dir;
+import cn.sm.tank.entity.Group;
 import cn.sm.tank.entity.NpcTank;
 import cn.sm.tank.entity.Player;
 import org.junit.jupiter.api.ClassOrderer;
@@ -16,17 +17,17 @@ import java.util.ArrayList;
 /**
  * @ClassName TankFrame
  * @Description TODO
- * @Author StoneEpigraph
+ * @Author WhatsUpeng
  * @Date 4/22/22 8:56 AM
  * @Version 1.0
  **/
 public class TankFrame extends Frame {
 
     public static TankFrame INSTANCE = new TankFrame();
-    Player player = new Player();
+    Player player;
     private java.util.List<NpcTank> npcTank = new ArrayList<>();
-    private int GAME_WIDTH= 1024;
-    private int GAME_HEIGHT = 768;
+    public int GAME_WIDTH= 1024;
+    public int GAME_HEIGHT = 768;
     private int BAD_TANK_INIT_LEN = 10;
 
     private TankFrame() {
@@ -43,9 +44,14 @@ public class TankFrame extends Frame {
         setVisible(true);
         addKeyListener(new MyKeyListener());
 
+        // 初始化player
+        int playerInitX = (GAME_WIDTH - ResourceMgr.goodTankL.getWidth()) / 2;
+        int playerInitY = GAME_HEIGHT - ResourceMgr.goodTankL.getHeight();
+        player = new Player(playerInitX, playerInitY, Group.PLAYER, this);
+
         // NPC
         for (int i = 0; i < BAD_TANK_INIT_LEN; i++) {
-            npcTank.add(new NpcTank((int) (Math.random() * GAME_WIDTH), (int) (Math.random() * GAME_HEIGHT / 2)));
+            npcTank.add(new NpcTank((int) (Math.random() * GAME_WIDTH), (int) (Math.random() * GAME_HEIGHT / 2), this));
         }
     }
 
@@ -67,8 +73,9 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        System.out.println("xxx");
-        player.paint(g);
+        if (player != null) {
+            player.paint(g);
+        }
         for (NpcTank npc : npcTank) {
             npc.paint(g);
         }

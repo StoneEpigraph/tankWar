@@ -1,6 +1,7 @@
 package cn.sm.tank.entity;
 
 import cn.sm.tank.ResourceMgr;
+import cn.sm.tank.TankFrame;
 import cn.sm.tank.constant.Dir;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
@@ -10,7 +11,7 @@ import java.util.Arrays;
 /**
  * @ClassName NpcTank
  * @Description TODO
- * @Author StoneEpigraph
+ * @Author WhatsUpeng
  * @Date 4/25/22 12:39 PM
  * @Version 1.0
  **/
@@ -19,13 +20,13 @@ public class NpcTank extends Tank {
     private static float TURN_ON_CHANCE = 0.1f;
     private static int SPEED = 5;
 
-    private int x, y;
     private Dir dir = Dir.DOWN;
 
     private boolean isLive = true;
     private boolean isMoving = false;
 
-    public NpcTank(int x, int y) {
+    public NpcTank(int x, int y, TankFrame tf) {
+        super(tf);
         this.x = x;
         this.y = y;
     }
@@ -58,6 +59,9 @@ public class NpcTank extends Tank {
         }
 
         // TODO 边界检测
+        if (!boundaryDetection(dir)) {
+            return ;
+        }
 
         switch (dir) {
             case UP:

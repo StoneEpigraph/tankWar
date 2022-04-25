@@ -1,27 +1,31 @@
 package cn.sm.tank.entity;
 
 import cn.sm.tank.ResourceMgr;
+import cn.sm.tank.TankFrame;
 import cn.sm.tank.constant.Dir;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 
 /**
  * @ClassName Player
  * @Description TODO
- * @Author StoneEpigraph
+ * @Author WhatsUpeng
  * @Date 4/22/22 9:17 AM
  * @Version 1.0
  **/
 @Data
 public class Player extends Tank {
 
+    private static Logger logger = LoggerFactory.getLogger(Player.class);
+
     private Dir dir = Dir.UP;
     private static int SPEED = 5;
-    private int x = 380;
-    private int y = 540;
     private boolean isLive = true;
     private boolean isMoving = false;
+    private Group group;
 
     public boolean isLive() {
         return isLive;
@@ -37,6 +41,13 @@ public class Player extends Tank {
 
     public void setMoving(boolean moving) {
         isMoving = moving;
+    }
+
+    public Player(int x, int y, Group group, TankFrame tf) {
+        super(tf);
+        this.x = x;
+        this.y = y;
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -69,6 +80,13 @@ public class Player extends Tank {
             return;
         }
         // TODO 边界检测
+        oldX = x;
+        oldY = y;
+        logger.debug("x: " + x + ", y: " + y + ", game_width: " + (tankFrame.GAME_WIDTH - ResourceMgr.goodTankL.getWidth())
+            + ", game_height: " + (tankFrame.GAME_HEIGHT - ResourceMgr.goodTankL.getHeight()));
+        if (!boundaryDetection(dir)) {
+            return ;
+        }
 
         switch (dir) {
             case UP:
