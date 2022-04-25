@@ -1,4 +1,4 @@
-package cn.sm.tank;
+package cn.sm.tank.entity;
 
 /**
  * @ClassName Bullet

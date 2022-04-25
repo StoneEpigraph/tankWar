@@ -1,5 +1,6 @@
-package cn.sm.tank;
+package cn.sm.tank.entity;
 
+import cn.sm.tank.ResourceMgr;
 import cn.sm.tank.constant.Dir;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.awt.*;
  * @Version 1.0
  **/
 @Data
-public class Player extends Frame {
+public class Player extends Tank {
 
     private Dir dir = Dir.UP;
     private static int SPEED = 5;
@@ -38,7 +39,6 @@ public class Player extends Frame {
         isMoving = moving;
     }
 
-    @Override
     public void paint(Graphics g) {
         g.setColor(Color.BLACK);
         switch (dir) {

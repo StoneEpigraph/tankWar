@@ -1,12 +1,17 @@
 package cn.sm.tank;
 
 import cn.sm.tank.constant.Dir;
+import cn.sm.tank.entity.NpcTank;
+import cn.sm.tank.entity.Player;
+import org.junit.jupiter.api.ClassOrderer;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * @ClassName TankFrame
@@ -19,8 +24,10 @@ public class TankFrame extends Frame {
 
     public static TankFrame INSTANCE = new TankFrame();
     Player player = new Player();
+    private java.util.List<NpcTank> npcTank = new ArrayList<>();
     private int GAME_WIDTH= 1024;
     private int GAME_HEIGHT = 768;
+    private int BAD_TANK_INIT_LEN = 10;
 
     private TankFrame() {
         setLocation(200, 400);
@@ -35,6 +42,11 @@ public class TankFrame extends Frame {
         });
         setVisible(true);
         addKeyListener(new MyKeyListener());
+
+        // NPC
+        for (int i = 0; i < BAD_TANK_INIT_LEN; i++) {
+            npcTank.add(new NpcTank((int) (Math.random() * GAME_WIDTH), (int) (Math.random() * GAME_HEIGHT / 2)));
+        }
     }
 
     Image offScreenImage = null;
@@ -57,6 +69,9 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         System.out.println("xxx");
         player.paint(g);
+        for (NpcTank npc : npcTank) {
+            npc.paint(g);
+        }
     }
 
     public static void launch() {
